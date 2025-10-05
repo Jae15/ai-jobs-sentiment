@@ -22,6 +22,9 @@ df = load_data()
 
 # Show headline count
 st.subheader("Key Stats")
+st.write("Available columns:", df.columns.tolist())
+st.write("First few rows:")
+st.write(df.head())
 col1, col2, col3, col4 = st.columns(4)
 col1.metric("Total Headlines", len(df))
 col2.metric("Positive", (df['sentiment']=="positive").sum())
