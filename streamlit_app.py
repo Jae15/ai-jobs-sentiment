@@ -1,44 +1,41 @@
-
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-st.set_page_config(page_title="AI & Tech Careers: News Sentiment Dashboard (2025)", layout="wide")
+# Set page configuration
+st.set_page_config(page_title="AI & Tech Careers: News Sentiment", layout="wide")
 
+# Title and Intro
 st.title("AI & Tech Careers: News Sentiment Dashboard (2025)")
 st.write(
-    "An interactive dashboard analyzing recent news headlines about the impact of AI on software and data jobs."
+    "An interactive dashboard analyzing recent news sentiment about the impact of AI on software and data jobs. "
+    "Data is automatically scraped and classified for sentiment (positive/neutral/negative)."
 )
 
+# Load the data
 @st.cache_data
 def load_data():
-    return pd.read_csv('ai_jobs_news_headlines.csv')
+    return pd.read_csv('ai_jobs_news_headlines_sentiment.csv')
 
 df = load_data()
 
-# Show headline count and basic stats
+# Show headline count
 st.subheader("Key Stats")
 col1, col2, col3, col4 = st.columns(4)
 col1.metric("Total Headlines", len(df))
-col2.metric("Unique Publishers", df['publisher'].nunique())
-col3.metric("Search Terms", df['search_term'].nunique())
-date_min = pd.to_datetime(df['published date']).min().strftime('%Y-%m-%d')
-date_max = pd.to_datetime(df['published date']).max().strftime('%Y-%m-%d')
-col4.metric("Date Range", f"{date_min} to {date_max}")
+col2.metric("Positive", (df['sentiment']=="positive").sum())
+col3.metric("Negative", (df['sentiment']=="negative").sum())
+col4.metric("Neutral", (df['sentiment']=="neutral").sum())
 
-st.write("Available columns:", df.columns.tolist())
-st.write("First few rows:")
-st.write(df.head())
-
-# Publisher distribution bar chart
-st.subheader("Headline Distribution by Publisher")
-publisher_counts = df['publisher'].value_counts()
+# Sentiment distribution bar chart
+st.subheader("Sentiment Distribution")
+sentiment_counts = df['sentiment'].value_counts()
 fig, ax = plt.subplots()
-publisher_counts.plot(kind='bar', ax=ax)
-ax.set_xlabel("Publisher")
+sns.barplot(x=sentiment_counts.index, y=sentiment_counts.values,
+            palette={"positive":"green", "negative":"red", "neutral":"gray"}, ax=ax)
+ax.set_xlabel("Sentiment")
 ax.set_ylabel("Number of Headlines")
-plt.xticks(rotation=45)
 st.pyplot(fig)
 
 # Explore by search term or publisher
@@ -52,18 +49,27 @@ with st.expander("Filter by"):
 if filtered.empty:
     st.write("No results for this selection.")
 else:
-    st.write(filtered[['title', 'description', 'published date', 'publisher', 'search_term']].head(20))
+    st.write(filtered[['title', 'sentiment', 'published date', 'publisher']].head(20))
 
-# Headline frequency over time
+# Sentiment over time (using the actual date column from your data)
 if 'published date' in df.columns:
-    st.subheader("Headline Frequency Over Time")
+    st.subheader("Sentiment Trends Over Time")
     df['published date'] = pd.to_datetime(df['published date'], errors='coerce')
-    daily_count = df.groupby(pd.Grouper(key='published date', freq='D')).size()
+    daily = df.groupby([pd.Grouper(key='published date', freq='D'),'sentiment']).size().unstack(fill_value=0)
     fig2, ax2 = plt.subplots()
-    daily_count.plot(ax=ax2)
+    daily.plot(ax=ax2)
     ax2.set_ylabel("Number of Headlines")
-    ax2.set_title("Headlines by Day")
+    ax2.set_title("Sentiment by Day")
     st.pyplot(fig2)
 
+# Compound score distribution
+st.subheader("Compound Sentiment Score Distribution")
+fig3, ax3 = plt.subplots()
+df.hist('compound', bins=30, ax=ax3)
+ax3.set_xlabel("Compound Sentiment Score")
+ax3.set_ylabel("Frequency")
+ax3.set_title("Distribution of VADER Compound Scores")
+st.pyplot(fig3)
+
 st.markdown("---")
-st.write("Built with Python, pandas, matplotlib, seaborn, and Streamlit.")
+st.write("Built with Python, pandas, NLTK VADER, matplotlib, seaborn, and Streamlit.")
