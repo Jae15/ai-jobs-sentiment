@@ -1,129 +1,195 @@
-Project Overview
+# AI & Tech Careers: News Sentiment Dashboard (2025)
 
-The rapid advancement of AI has generated both optimism and concern in the job market, particularly within technology and data-focused careers.
-This project gathers recent news headlines about AI and employment, classifies their sentiment, and visualizes the trends through a Streamlit web app.
+[![Live App](https://img.shields.io/badge/Live-Streamlit-ff4b4b?logo=streamlit&logoColor=white)](https://ai-jobs-sentiment-7yvxgtyebegyncteakelep.streamlit.app/)
+[![Python](https://img.shields.io/badge/Python-3.12-3776ab?logo=python&logoColor=white)](https://www.python.org/)
+[![Stack](https://img.shields.io/badge/Stack-Streamlit%20|%20pandas%20|%20NLTK%20|%20Matplotlib%20|%20Seaborn-4c1)](#technologies-used)
 
-The repository includes:
+An end-to-end project exploring how **Artificial Intelligence (AI)** is portrayed in technology and data-related career news.  
+This project combines **data analysis**, **sentiment classification**, and **interactive visualization** to examine how news outlets describe AI’s impact on jobs in 2024–2025.
 
-ai_impact_jobs_sentiment_analysis.ipynb – notebook for data collection, cleaning, and sentiment analysis.
+**Live Dashboard:** [AI & Tech Careers: News Sentiment Dashboard](https://ai-jobs-sentiment-7yvxgtyebegyncteakelep.streamlit.app/)
 
-ai_jobs_news_headlines.csv – raw dataset containing collected headlines and metadata.
+---
 
-ai_jobs_news_headlines_sentiment.csv – processed dataset with sentiment classifications.
+## Table of Contents
+- [Overview](#overview)
+- [Key Features](#key-features)
+- [Demo](#demo)
+- [Data](#data)
+- [Project Structure](#project-structure)
+- [Quickstart](#quickstart)
+- [Local Development](#local-development)
+- [Configuration](#configuration)
+- [Methodology](#methodology)
+- [Key Insights](#key-insights)
+- [Future Enhancements](#future-enhancements)
+- [Technologies Used](#technologies-used)
+- [Author](#author)
 
-streamlit_app.py – interactive dashboard for visualizing sentiment data.
+---
 
-Features
+## Overview
 
-Automated Sentiment Classification
-Headlines are analyzed and labeled as positive, neutral, or negative using an NLP-based sentiment model.
+The integration of AI into the workforce has inspired both optimism and uncertainty.  
+This project investigates **how AI-related job news headlines** reflect public perception by applying sentiment analysis and visualizing results in a live dashboard.  
 
-Interactive Streamlit Dashboard
-Users can explore overall sentiment, filter results by publisher or keyword, and view sentiment trends over time.
+By combining natural language processing (NLP), Python-based data analysis, and Streamlit, the project enables users to interact with news sentiment data and explore trends over time.
 
-Trend Analysis
-Visualizes how news sentiment changes by day or topic, allowing for exploration of shifts in tone over time.
+---
 
-Clean, Reproducible Workflow
-The notebook contains the complete pipeline from data cleaning to model inference and export.
+## Key Features
 
-Dashboard Overview
+- **Automated Sentiment Analysis**  
+  Headlines are labeled as *positive*, *neutral*, or *negative* using a natural language processing model (e.g., NLTK/VADER).
 
-The Streamlit dashboard provides:
+- **Interactive Streamlit Dashboard**  
+  Explore sentiment distribution, filter by publisher or keyword, and track tone over time.
 
-Summary Metrics – total headlines and sentiment counts.
+- **Reproducible Workflow**  
+  Clean and transparent steps for data collection, preprocessing, classification, and visualization.
 
-Sentiment Distribution Chart – a visual overview of how positive, neutral, and negative headlines compare.
+- **Lightweight, Visual, and Live**  
+  A simple setup deployable to Streamlit Cloud with instant updates.
 
-Filtering Tools – explore results by publisher or search term.
+---
 
-Time-Series Trends – sentiment evolution by publication date.
+## Demo
 
-Explore the live dashboard here:
-https://ai-jobs-sentiment-7yvxgtyebegyncteakelep.streamlit.app/
+**Live App:** [https://ai-jobs-sentiment-7yvxgtyebegyncteakelep.streamlit.app/](https://ai-jobs-sentiment-7yvxgtyebegyncteakelep.streamlit.app/)
 
-Data
-File	Description
-ai_jobs_news_headlines.csv	Raw scraped headlines with publisher and date fields
-ai_jobs_news_headlines_sentiment.csv	Processed dataset with sentiment scores
-ai_impact_jobs_sentiment_analysis.ipynb	Notebook containing data preparation and analysis
-streamlit_app.py	Streamlit dashboard for interactive visualization
+The dashboard includes:
+- Headline summary metrics (total, positive, negative, neutral)
+- Sentiment distribution bar chart
+- Filtering by publisher or search term
+- Sentiment-over-time trend visualization
 
-Each record typically contains:
+---
 
-title – the headline text
+## Data
 
-publisher – the news outlet or website
+| File | Description |
+|------|--------------|
+| `ai_jobs_news_headlines.csv` | Raw scraped headlines and metadata |
+| `ai_jobs_news_headlines_sentiment.csv` | Processed dataset with sentiment labels |
+| `ai_impact_jobs_sentiment_analysis.ipynb` | Notebook for cleaning, analysis, and sentiment classification |
+| `streamlit_app.py` | Streamlit dashboard for visualization |
 
-published date – date of publication
+Each record includes:
+- `title` — headline text  
+- `publisher` — news source  
+- `published date` — date of publication  
+- `search_term` — keyword or topic used for scraping  
+- `sentiment` — sentiment category (*positive*, *neutral*, or *negative*)
 
-search_term – the query used to find the article
+---
 
-sentiment – sentiment label: positive, neutral, or negative
+## Project Structure
 
-Installation and Usage
-1. Clone the repository
+ai-jobs-sentiment/
+├── ai_impact_jobs_sentiment_analysis.ipynb # Data analysis and sentiment modeling
+├── ai_jobs_news_headlines.csv # Raw dataset
+├── ai_jobs_news_headlines_sentiment.csv # Processed dataset
+├── streamlit_app.py # Streamlit dashboard
+├── requirements.txt # Dependencies
+└── README.md # Project documentation
+
+
+---
+
+## Quickstart
+
+To run this project locally:
+
+```bash
+# 1. Clone the repository
 git clone https://github.com/Jae15/ai-jobs-sentiment.git
 cd ai-jobs-sentiment
 
-2. Install dependencies
+# 2. Install dependencies
 pip install -r requirements.txt
 
-3. Run the Streamlit app locally
+# 3. Launch the Streamlit app
 streamlit run streamlit_app.py
 
-4. Open in your browser
+```
+---
+# Local Development
 
-Go to: http://localhost:8501
+To reproduce or extend the analysis:
 
-Methodology
+Open the notebook:
+ai_impact_jobs_sentiment_analysis.ipynb
 
-Data Collection – Gathered recent news headlines about AI and employment using search queries.
+Run the data cleaning and sentiment classification steps.
 
-Text Preprocessing – Cleaned and standardized text data, removed duplicates and irrelevant entries.
+Export the processed file as:
+ai_jobs_news_headlines_sentiment.csv
 
-Sentiment Analysis – Classified sentiment using a natural language processing approach (NLTK/VADER or similar).
+Launch the dashboard:
+streamlit run streamlit_app.py
+---
 
-Visualization – Built interactive data visualizations using Matplotlib, Seaborn, and Streamlit.
+# Pipeline Overview
 
-Technologies Used
+Data Collection → Cleaning → Sentiment Classification → Export → Visualization
 
-Python
 
-pandas
+Data Collection
+- Gather news headlines on AI and employment using topic-specific queries.
 
-NLTK / VADER
+Preprocessing
+- Remove duplicates, clean text, and standardize formatting.
 
-Matplotlib
+Sentiment Analysis
+- Apply rule-based or ML-driven sentiment scoring using NLP techniques.
 
-Seaborn
+Visualization
+- Render insights interactively using Streamlit, Seaborn, and Matplotlib.
 
-Streamlit
+# Key Insights
 
-Google Colab
+- The majority of AI-related headlines display a neutral tone, suggesting balanced coverage.
 
-Insights and Observations
+- Positive sentiment has grown in 2024–2025, signaling increased optimism about AI’s potential in the workforce.
 
-The majority of news headlines maintain a neutral tone toward AI’s effect on jobs.
+- A smaller segment of publishers consistently emphasizes automation risks and job displacement.
 
-Positive sentiment has increased, particularly in 2024–2025, highlighting growing optimism about AI-driven job creation.
+# Future Enhancements
 
-Some publishers remain focused on automation risks, contributing to negative sentiment trends.
+- Integrate transformer-based sentiment models (e.g., BERT, RoBERTa) for higher precision.
 
-Future Improvements
+- Expand data sources to include social media, tech blogs, and research reports.
 
-Integrate transformer-based sentiment models (e.g., BERT, RoBERTa) for higher accuracy.
+- Automate data collection and dashboard refresh cycles.
 
-Expand data sources to include blogs and social media content.
+- Add topic modeling and clustering to identify recurring AI-related themes.
 
-Add topic modeling and keyword clustering to identify emerging themes.
+- Incorporate geographic or publisher bias analysis for deeper insights.
 
-Automate data updates and deploy continuous monitoring.
+# Technologies Used
+
+- Python – Core programming language
+
+- pandas – Data manipulation and analysis
+
+- NLTK / VADER – Sentiment analysis
+
+- Matplotlib / Seaborn – Visualization
+
+- Streamlit – Interactive dashboard
+
+- Google Colab / Jupyter – Notebook development environment
+
+---
 
 Author
+- Jae Mwangi
+- Data Professional – SQL | Python | AI Research | Web Development
 
-Jae Mwangi
-Data Professional – SQL | Python | AI Research | Web Development
 GitHub: Jae15
 
 Live App: AI Jobs Sentiment Dashboard
+
+
+
+
